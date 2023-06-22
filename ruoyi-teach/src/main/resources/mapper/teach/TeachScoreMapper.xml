@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teach.mapper.TeachScoreMapper">
+    <resultMap type="TeachScore" id="TeachScoreResult">
+        <result property="stuId" column="stu_id"/>
+        <result property="probability" column="probability"/>
+        <result property="cloudCompute" column="cloud_compute"/>
+        <result property="dataStructure" column="data_structure"/>
+        <result property="designPatterns" column="design_patterns"/>
+        <result property="algorithm" column="algorithm"/>
+        <result property="cyberSecurity" column="cyber_security"/>
+        <result property="nlp" column="nlp"/>
+        <result property="matrixAnalysis" column="matrix_analysis"/>
+        <result property="deepLearnning" column="deep_learnning"/>
+        <result property="dataStore" column="data_store"/>
+        <result property="operateSystem" column="operate_system"/>
+    </resultMap>
+
+    <resultMap type="com.ruoyi.teach.domain.dto.TeachScoreAndStu" id="TeachScoreStu">
+        <result property="stuId" column="stu_id"/>
+        <result property="stuName" column="stu_name"/>
+        <result property="stuGender" column="stu_gender"/>
+        <result property="stuAge" column="stu_age"/>
+        <result property="probability" column="probability"/>
+        <result property="cloudCompute" column="cloud_compute"/>
+        <result property="dataStructure" column="data_structure"/>
+        <result property="designPatterns" column="design_patterns"/>
+        <result property="algorithm" column="algorithm"/>
+        <result property="cyberSecurity" column="cyber_security"/>
+        <result property="nlp" column="nlp"/>
+        <result property="matrixAnalysis" column="matrix_analysis"/>
+        <result property="deepLearnning" column="deep_learnning"/>
+        <result property="dataStore" column="data_store"/>
+        <result property="operateSystem" column="operate_system"/>
+    </resultMap>
+
+    <sql id="selectTeachScoreVo">
+        select stu_id,
+               probability,
+               cloud_compute,
+               data_structure,
+               design_patterns,
+               algorithm,
+               nlp,
+               matrix_analysis,
+               deep_learnning,
+               data_store,
+               operate_system
+        from teach_score
+    </sql>
+
+    <sql id="selectTeachScoreStu">
+        select *
+        from teach_score left join teach_student
+        on teach_score.stu_id = teach_student.stu_id
+    </sql>
+
+    <select id="selectTeachScoreAndStuList" parameterType="com.ruoyi.teach.domain.TeachScore" resultMap="TeachScoreStu">
+        <include refid="selectTeachScoreStu"/>
+        <where>
+            <if test="probability != null ">
+                and probability = #{probability}
+            </if>
+            <if test="cloudCompute != null ">
+                and cloud_compute = #{cloudCompute}
+            </if>
+            <if test="dataStructure != null ">
+                and data_structure = #{dataStructure}
+            </if>
+            <if test="designPatterns != null ">
+                and design_patterns = #{designPatterns}
+            </if>
+            <if test="algorithm != null ">
+                and algorithm = #{algorithm}
+            </if>
+            <if test="cyberSecurity != null ">
+                and cyber_security = #{cyberSecurity}
+            </if>
+            <if test="nlp != null ">
+                and nlp = #{nlp}
+            </if>
+            <if test="matrixAnalysis != null ">
+                and matrix_analysis = #{matrixAnalysis}
+            </if>
+            <if test="deepLearnning != null ">
+                and deep_learnning = #{deepLearnning}
+            </if>
+            <if test="dataStore != null ">
+                and data_store = #{dataStore}
+            </if>
+            <if test="operateSystem != null ">
+                and operate_system = #{operateSystem}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTeachScoreList" parameterType="com.ruoyi.teach.domain.TeachScore" resultMap="TeachScoreResult">
+        <include refid="selectTeachScoreVo"/>
+        <where>
+            <if test="probability != null ">
+                and probability = #{probability}
+            </if>
+            <if test="cloudCompute != null ">
+                and cloud_compute = #{cloudCompute}
+            </if>
+            <if test="dataStructure != null ">
+                and data_structure = #{dataStructure}
+            </if>
+            <if test="designPatterns != null ">
+                and design_patterns = #{designPatterns}
+            </if>
+            <if test="algorithm != null ">
+                and algorithm = #{algorithm}
+            </if>
+            <if test="cyberSecurity != null ">
+                and cyber_security = #{cyberSecurity}
+            </if>
+            <if test="nlp != null ">
+                and nlp = #{nlp}
+            </if>
+            <if test="matrixAnalysis != null ">
+                and matrix_analysis = #{matrixAnalysis}
+            </if>
+            <if test="deepLearnning != null ">
+                and deep_learnning = #{deepLearnning}
+            </if>
+            <if test="dataStore != null ">
+                and data_store = #{dataStore}
+            </if>
+            <if test="operateSystem != null ">
+                and operate_system = #{operateSystem}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTeachScoreByStuId" parameterType="Long" resultMap="TeachScoreResult">
+        <include refid="selectTeachScoreVo"/>
+        where stu_id = #{stuId}
+    </select>
+
+    <insert id="insertTeachScore" parameterType="TeachScore">
+        insert into teach_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">
+                stu_id,
+            </if>
+            <if test="probability != null">
+                probability,
+            </if>
+            <if test="cloudCompute != null">
+                cloud_compute,
+            </if>
+            <if test="dataStructure != null">
+                data_structure,
+            </if>
+            <if test="designPatterns != null">
+                design_patterns,
+            </if>
+            <if test="algorithm != null">
+                algorithm,
+            </if>
+            <if test="cyberSecurity != null">
+                cyber_security,
+            </if>
+            <if test="nlp != null">
+                nlp,
+            </if>
+            <if test="matrixAnalysis != null">
+                matrix_analysis,
+            </if>
+            <if test="deepLearnning != null">
+                deep_learnning,
+            </if>
+            <if test="dataStore != null">
+                data_store,
+            </if>
+            <if test="operateSystem != null">
+                operate_system,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">
+                #{stuId},
+            </if>
+            <if test="probability != null">
+                #{probability},
+            </if>
+            <if test="cloudCompute != null">
+                #{cloudCompute},
+            </if>
+            <if test="dataStructure != null">
+                #{dataStructure},
+            </if>
+            <if test="designPatterns != null">
+                #{designPatterns},
+            </if>
+            <if test="algorithm != null">
+                #{algorithm},
+            </if>
+            <if test="nlp != null">
+                #{nlp},
+            </if>
+            <if test="matrixAnalysis != null">
+                #{matrixAnalysis},
+            </if>
+            <if test="deepLearnning != null">
+                #{deepLearnning},
+            </if>
+            <if test="dataStore != null">
+                #{dataStore},
+            </if>
+            <if test="operateSystem != null">
+                #{operateSystem},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateTeachScore" parameterType="TeachScore">
+        update teach_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="probability != null">
+                probability = #{probability},
+            </if>
+            <if test="cloudCompute != null">
+                cloud_compute = #{cloudCompute},
+            </if>
+            <if test="dataStructure != null">
+                data_structure = #{dataStructure},
+            </if>
+            <if test="designPatterns != null">
+                design_patterns = #{designPatterns},
+            </if>
+            <if test="algorithm != null">
+                algorithm = #{algorithm},
+            </if>
+            <if test="nlp != null">
+                nlp = #{nlp},
+            </if>
+            <if test="matrixAnalysis != null">
+                matrix_analysis = #{matrixAnalysis},
+            </if>
+            <if test="deepLearnning != null">
+                deep_learnning = #{deepLearnning},
+            </if>
+            <if test="dataStore != null">
+                data_store = #{dataStore},
+            </if>
+            <if test="operateSystem != null">
+                operate_system = #{operateSystem},
+            </if>
+        </trim>
+        where stu_id = #{stuId}
+    </update>
+
+    <delete id="deleteTeachScoreByStuId" parameterType="Long">
+        delete
+        from teach_score
+        where stu_id = #{stuId}
+    </delete>
+
+    <delete id="deleteTeachScoreByStuIds" parameterType="String">
+        delete from teach_score where stu_id in
+        <foreach item="stuId" collection="array" open="(" separator="," close=")">
+            #{stuId}
+        </foreach>
+    </delete>
+</mapper>

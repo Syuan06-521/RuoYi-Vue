@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teach.mapper.TeachPaperMapper">
+    
+    <resultMap type="TeachPaper" id="TeachPaperResult">
+        <result property="paperId"    column="paper_id"    />
+        <result property="paperName"    column="paper_name"    />
+        <result property="paperDescrip"    column="paper_descrip"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachPaperVo">
+        select paper_id, paper_name, paper_descrip, create_by, create_time, update_by, update_time, remark from teach_paper
+    </sql>
+
+    <select id="selectTeachPaperList" parameterType="TeachPaper" resultMap="TeachPaperResult">
+        <include refid="selectTeachPaperVo"/>
+        <where>  
+            <if test="paperName != null  and paperName != ''"> and paper_name like concat('%', #{paperName}, '%')</if>
+            <if test="paperDescrip != null  and paperDescrip != ''"> and paper_descrip = #{paperDescrip}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachPaperByPaperId" parameterType="Integer" resultMap="TeachPaperResult">
+        <include refid="selectTeachPaperVo"/>
+        where paper_id = #{paperId}
+    </select>
+        
+    <insert id="insertTeachPaper" parameterType="TeachPaper">
+        insert into teach_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paperId != null">paper_id,</if>
+            <if test="paperName != null">paper_name,</if>
+            <if test="paperDescrip != null">paper_descrip,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paperId != null">#{paperId},</if>
+            <if test="paperName != null">#{paperName},</if>
+            <if test="paperDescrip != null">#{paperDescrip},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachPaper" parameterType="TeachPaper">
+        update teach_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="paperName != null">paper_name = #{paperName},</if>
+            <if test="paperDescrip != null">paper_descrip = #{paperDescrip},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where paper_id = #{paperId}
+    </update>
+
+    <delete id="deleteTeachPaperByPaperId" parameterType="Integer">
+        delete from teach_paper where paper_id = #{paperId}
+    </delete>
+
+    <delete id="deleteTeachPaperByPaperIds" parameterType="String">
+        delete from teach_paper where paper_id in 
+        <foreach item="paperId" collection="array" open="(" separator="," close=")">
+            #{paperId}
+        </foreach>
+    </delete>
+</mapper>
